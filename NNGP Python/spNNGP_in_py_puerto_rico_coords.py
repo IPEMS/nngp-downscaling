@@ -19,23 +19,23 @@ from datetime import date, datetime
 # CID
 Latitude_CID = 18.2115553
 Longitude_CID = -67.1370868
-file_CID = "../CID.csv"
+file_CID = "..Data Puerto Rico/CID.csv"
 # Casa Juan, Mayagüez
 Latitude_CJ = 18.200897
 Longitude_CJ = -67.148253
-file_CJ = "../CJ.csv"
+file_CJ = "..Data Puerto Rico/CJ.csv"
 # Mayaguez Urb Paseo Los Robles , Mayagüez
 Latitude_UP = 18.231220
 Longitude_UP = -67.155010
-file_UP = "../UP.csv"
+file_UP = "..Data Puerto Rico/UP.csv"
 # My Weather Station, Mayagüez
 Latitude_MWS = 18.234288
 Longitude_MWS = -67.150602    
-file_MWS = "../MWS.csv"
+file_MWS = "..Data Puerto Rico/MWS.csv"
 # My Weather Station, Mayagüez (Blue logo)
 Latitude_MWSB = 18.233073
 Longitude_MWSB = -67.136155   
-file_MWSB = "../MWSB.csv"
+file_MWSB = "..Data Puerto Rico/MWSB.csv"
 
 ######################################
 # make an array of long for plotting #
