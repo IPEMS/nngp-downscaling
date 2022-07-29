@@ -11,6 +11,67 @@ from util_py import dist2, spCor
 
 import time
 
+@njit
+def y_hat_calc(n_samples, theta, nTheta, phiIndx, sigmaSqIndx, tauSqIndx, coords_1D, m, nn_indx_0_1D, i, q, coords_0_1D, C, tmp_m, c, X, p_beta_samples,
+          nn_indx_0, Y_1D, zIndx, X_0_1D, n, y_0, z):
+
+    for s in range(0, n_samples, 1):
+        # get each phi, sigma, and tau
+        phi = theta[s*nTheta+phiIndx]
+        sigmaSq = theta[s*nTheta+sigmaSqIndx]
+        tauSq = theta[s*nTheta+tauSqIndx]
+
+        # go through nn
+        for k in range(0, m, 1):
+            d = dist2(coords_1D[nn_indx_0_1D[i+q*k]], coords_1D[n + nn_indx_0_1D[i + q*k]], coords_0_1D[i], coords_0_1D[q + i])
+            c[k] = sigmaSq*spCor(d, phi)
+            for l in range(0, m, 1):
+                d = dist2(coords_1D[nn_indx_0_1D[i+q*k]], coords_1D[n + nn_indx_0_1D[i + q*k]], coords_1D[nn_indx_0_1D[i + q*l]], coords_1D[n + nn_indx_0_1D[i + q*l]])
+                C[int(l*m+k)] = sigmaSq*spCor(d, phi)
+                if(k == l):
+                    C[int(l*m+k)] += tauSq
+
+        ##########
+        # dpotrf #
+        ##########
+
+        dpotrf(m, C)
+
+        ##########
+        # dpotri #
+        ##########
+
+        dpotri(m, C)
+
+        #########
+        # dysmv #
+        #########
+
+        dsymv(tmp_m, C, c, 0, 1, m, 0)
+
+        # get the dot product of X and beta
+        dot_part = np.dot(X, p_beta_samples.T)
+        dot_part2 = dot_part[:, s]
+        dot_part3 = dot_part2[nn_indx_0[i, :]]
+
+
+        for k in range(0, m, 1):
+            d += tmp_m[k]*(Y_1D[nn_indx_0_1D[i + q*k]] - dot_part3[k])
+
+        zIndx += 1
+
+
+        dot_part_Y = np.dot(X_0_1D, p_beta_samples.T)
+        dot_part_Y2 = dot_part_Y[i, s]
+                    # if(count == 1 or count == 2):
+                    #     print("dot")
+                    #     print((dot_part_Y2))
+
+        # i = q (45), s = n_smaples (10)
+        y_0[s*q+i] = dot_part_Y2 + d + np.sqrt(sigmaSq + tauSq - np.dot(tmp_m, c))*z[zIndx]
+
+
+
 def rNNGPPredict(X, Y, coords, n, p, m, X_0, coords_0, q, nn_indx_0, 
                 p_beta_samples, p_theta_samples, n_samples, verbose, progress_rep, n_reps):
     # print stuff off
@@ -67,61 +128,10 @@ def rNNGPPredict(X, Y, coords, n, p, m, X_0, coords_0, q, nn_indx_0,
         if(progress_rep):
             if(i % n_reps == 0 or i == 0):
                 start = time.time()
+        # calculate y hat
+        y_hat_calc(n_samples, theta, nTheta, phiIndx, sigmaSqIndx, tauSqIndx, coords_1D, m, nn_indx_0_1D, 
+                   i, q, coords_0_1D, C, tmp_m, c, X, p_beta_samples, nn_indx_0, Y_1D, zIndx, X_0_1D, n, y_0, z)
 
-        for s in range(0, n_samples, 1):
-            # get each phi, sigma, and tau
-            phi = theta[s*nTheta+phiIndx]
-            sigmaSq = theta[s*nTheta+sigmaSqIndx]
-            tauSq = theta[s*nTheta+tauSqIndx]
-
-            # go through nn
-            for k in range(0, m, 1):
-                d = dist2(coords_1D[nn_indx_0_1D[i+q*k]], coords_1D[n + nn_indx_0_1D[i + q*k]], coords_0_1D[i], coords_0_1D[q + i])
-                c[k] = sigmaSq*spCor(d, phi)
-                for l in range(0, m, 1):
-                    d = dist2(coords_1D[nn_indx_0_1D[i+q*k]], coords_1D[n + nn_indx_0_1D[i + q*k]], coords_1D[nn_indx_0_1D[i + q*l]], coords_1D[n + nn_indx_0_1D[i + q*l]])
-                    C[int(l*m+k)] = sigmaSq*spCor(d, phi)
-                    if(k == l):
-                        C[int(l*m+k)] += tauSq
-
-            ##########
-            # dpotrf #
-            ##########
-
-            dpotrf(m, C)
-
-            ##########
-            # dpotri #
-            ##########
-
-            dpotri(m, C)
-
-            #########
-            # dysmv #
-            #########
-
-            dsymv(tmp_m, C, c, 0, 1, m, 0)
-
-            # get the dot product of X and beta
-            dot_part = np.dot(X, p_beta_samples.T)
-            dot_part2 = dot_part[:, s]
-            dot_part3 = dot_part2[nn_indx_0[i, :]]
-
-
-            for k in range(0, m, 1):
-                d += tmp_m[k]*(Y_1D[nn_indx_0_1D[i + q*k]] - dot_part3[k])
-
-            zIndx += 1
-
-
-            dot_part_Y = np.dot(X_0_1D, p_beta_samples.T)
-            dot_part_Y2 = dot_part_Y[i, s]
-                        # if(count == 1 or count == 2):
-                        #     print("dot")
-                        #     print((dot_part_Y2))
-
-            # i = q (45), s = n_smaples (10)
-            y_0[s*q+i] = dot_part_Y2 + d + np.sqrt(sigmaSq + tauSq - np.dot(tmp_m, c))*z[zIndx]
 
         # save samples
         if(progress_rep):
