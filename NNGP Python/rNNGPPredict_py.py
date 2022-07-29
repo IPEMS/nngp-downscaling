@@ -9,8 +9,10 @@ from fortran_py import dpotrf, dpotri, dsymv
 
 from util_py import dist2, spCor
 
+import time
+
 def rNNGPPredict(X, Y, coords, n, p, m, X_0, coords_0, q, nn_indx_0, 
-                p_beta_samples, p_theta_samples, n_samples, verbose):
+                p_beta_samples, p_theta_samples, n_samples, verbose, progress_rep, n_reps):
     # print stuff off
     if(verbose):
         print("----------------------------------------------------------")
@@ -61,6 +63,11 @@ def rNNGPPredict(X, Y, coords, n, p, m, X_0, coords_0, q, nn_indx_0,
     z = np.random.normal(loc = 0, scale = 1, size = (q*n_samples))
 
     for i in range(0, q, 1):
+        # used for timming
+        if(progress_rep):
+            if(i % n_reps == 0 or i == 0):
+                start = time.time()
+
         for s in range(0, n_samples, 1):
             # get each phi, sigma, and tau
             phi = theta[s*nTheta+phiIndx]
@@ -116,6 +123,10 @@ def rNNGPPredict(X, Y, coords, n, p, m, X_0, coords_0, q, nn_indx_0,
             # i = q (45), s = n_smaples (10)
             y_0[s*q+i] = dot_part_Y2 + d + np.sqrt(sigmaSq + tauSq - np.dot(tmp_m, c))*z[zIndx]
 
+        # save samples
+        if(progress_rep):
+            if((i + 1) % n_reps == 0):                             # time for N samples * how many left/10
+                print(100*((i+1))/(q), "%, Time estimate left = ", np.round((time.time() - start)*(q - (i+1))/n_reps, 2), "sec")
 
     if(verbose):
         print("Location: " + str(i + 1) + " of " + str(q) + ", " + str(100.0*(i + 1)/q))
