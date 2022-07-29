@@ -155,7 +155,7 @@ for i in range(0, nFiles, 1):
     # x -> -67.16, -67.10
     # y -> 18.17, 18.27
 # get image of background
-file_img = "../Data Puerto Rico/map.png"
+file_img = "C:/Users/tj10c/Documents/Classes/Other/REU Documents/REU code/NREL Data/map.png"
 
 BBox = (-67.18, -67.10, 18.17, 18.27)
 
@@ -356,6 +356,45 @@ hour_N = np.concatenate([np.array(site1["Hour"]), np.array(site2["Hour"]), np.ar
 ## combind the two data sets
 time_hour = np.append(time_hour, hour_N)
 
+########################
+# Get temperature data #
+########################
+
+# ambient weather
+temp_CID = data_CID["Outdoor Temperature (°F)"]
+temp_CJ = data_CJ["Outdoor Temperature (°F)"]
+temp_UP = data_UP["Outdoor Temperature (°F)"]
+temp_MWS = data_MWS["Outdoor Temperature (°F)"]
+temp_MWSB = data_MWSB["Outdoor Temperature (°F)"]
+
+# NREL
+temp_1 = site1["Temperature"]
+temp_2 = site2["Temperature"]
+temp_3 = site3["Temperature"]
+temp_4 = site4["Temperature"]
+temp_5 = site5["Temperature"]
+temp_6 = site6["Temperature"]
+temp_7 = site7["Temperature"]
+temp_8 = site8["Temperature"]
+temp_9 = site9["Temperature"]
+temp_10 = site10["Temperature"]
+temp_11 = site11["Temperature"]
+temp_12 = site12["Temperature"]
+temp_13 = site13["Temperature"]
+temp_14 = site14["Temperature"]
+temp_15 = site15["Temperature"]
+temp_16 = site16["Temperature"]
+temp_17 = site17["Temperature"]
+temp_18 = site18["Temperature"]
+temp_19 = site19["Temperature"]
+temp_20 = site20["Temperature"]
+
+temp_tot = np.array(pd.concat([temp_CID, temp_CJ, temp_UP, temp_MWS, temp_MWSB, temp_1, temp_2,
+                               temp_3, temp_4, temp_5, temp_6, temp_7, temp_8, temp_9, temp_10,
+                               temp_11, temp_12, temp_13, temp_14, temp_15, temp_16, temp_17,
+                               temp_18, temp_19, temp_20], axis = 0))
+
+
 #########################
 # Get Rid of NAN values #
 #########################
@@ -367,6 +406,8 @@ time_hour = time_hour[np.isnan(SolR) == False]
 year_tot = year_tot[np.isnan(SolR) == False]
 month_tot = month_tot[np.isnan(SolR) == False]
 day_tot = day_tot[np.isnan(SolR) == False]
+# temp variables
+temp_tot = temp_tot[np.isnan(SolR) == False]
 
 ## coords variable
 # location
@@ -390,6 +431,8 @@ time_hour = time_hour[SolR != 0]
 year_tot = year_tot[SolR != 0]
 month_tot = month_tot[SolR != 0]
 day_tot = day_tot[SolR != 0]
+# temp variables
+temp_tot = temp_tot[SolR != 0]
 
 ## coords variable
 # location
@@ -415,6 +458,7 @@ month_final = np.array([])
 day_final = np.array([])
 lon_lat_final1 = np.array([])
 SolR_final = np.array([])
+temp_final = np.array([])
 # for predictions
 numb_of_days_final = np.array([])
 
@@ -426,6 +470,8 @@ for i in range(monthL, monthH + 1, 1):
     year_final = np.append(year_final, year_tot[month_tot == i])
     month_final = np.append(month_final, month_tot[month_tot == i])
     day_final = np.append(day_final, day_tot[month_tot == i])
+    # temp variables
+    temp_final = np.append(temp_final, temp_tot[month_tot == i])
 
     ## coords variable
     # location
@@ -470,7 +516,7 @@ phi = 8.9911
 
 ## x
 # has 1, time(hours), and date(days)
-x = np.column_stack((np.ones(len(time_final)), time_final, year_final, month_final, day_final))
+x = np.column_stack((np.ones(len(time_final)), time_final, year_final, month_final, day_final, temp_final))
 
 ## y
 # has the solar radiance
