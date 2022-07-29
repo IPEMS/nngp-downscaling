@@ -3,14 +3,14 @@ library(spNNGP)
 
 # files
   # model
-file.x = "../x_train.csv"
-file.y = "../y_train.csv"
-file.coords = "../coords_train.csv"
+file.x = "../R Using Python Data/Data From Python/x_train.csv"
+file.y = "../R Using Python Data/Data From Python/y_train.csv"
+file.coords = "../R Using Python Data/Data From Python/coords_train.csv"
 
   # predict
-file.x.ho = "../x_test.csv"
-file.coords.ho = "../coords_test.csv"
-file.y.ho = "../y_hat.csv"
+file.x.ho = "../R Using Python Data/Data From Python/x_test.csv"
+file.coords.ho = "../R Using Python Data/Data From Python/coords_test.csv"
+file.y.ho = "../R Using Python Data/Data From R/y_hat.csv"
 
 # variable from python
   # model
