@@ -17,7 +17,7 @@ import time
 
 # helper fucntions
 
-@njit(parallel = True)
+@njit
 def updateBF(B, F, c, C, coords, nnIndx, nnIndxLU, n, theta, tauSqIndx, sigmaSqIndx, phiIndx):
     logDet = 0
 
@@ -65,8 +65,9 @@ def updateBF(B, F, c, C, coords, nnIndx, nnIndxLU, n, theta, tauSqIndx, sigmaSqI
 def rNNGP(y, X, p, n, m, coords, cov_model, nn_indx, nn_indx_lu,
         sigma_sq_IG, tau_sq_IG, phi_Unif, beta_starting, sigma_sq_starting,
         tau_sq_starting, phi_starting, sigma_sq_tuning, tau_sq_tuning, phi_tuning, 
-        n_samples, verbose):
+        n_samples, verbose, progress_rep, n_reps):
     
+
     # convert sIndx, coords, and nnIndxLU into arrays
     coords = (coords.T).flatten()
     nn_indx_lu = (nn_indx_lu.T).flatten()
@@ -183,62 +184,17 @@ def rNNGP(y, X, p, n, m, coords, cov_model, nn_indx, nn_indx_lu,
     # make X flat
     X_flat = (X.T).flatten()
 
-            # print(X_flat)
-
-            # print(X)
 
     ###############
     # Update Beta #
     ###############
-            # print("B")
-            # print(B)
-            # print("F")
-            # print(F)
-            # print("---n_samples---")
-            # print(n_samples)
-            # print("---temp_p---")
-            # print(temp_p)
-            # print("---n_samples---")
-            # print(n_samples)
-            # print("---y---")
-            # print(y)
-            # print("---n---")
-            # print(n)
-            # print("---p---")
-            # print(p)
-            # print("---coords---")
-            # print(coords)
-            # print("---m---")
-            # print(m)
-            # print("---phi_Unif---")
-            # print(phi_Unif)
-            # print("---sigma_sq_IG---")
-            # print(sigma_sq_IG)
-            # print("---thetaCand---")
-            # print(thetaCand)
-            # print("---tuning---")
-            # print(tuning)
-            # print("---tmp_pp---")
-            # print(tmp_pp)
-            # print("---beta---")
-            # print(beta)
-            # print("---theta---")
-            # print(theta)
-            # print("---C---")
-            # print(C)
-            # print("---c---")
-            # print(c)
-            # print("---temp_p2---")
-            # print(temp_p2)
-            # print("---temp_n---")
-            # print(temp_n)
-            # print("---QCurrent---")
-            # print(QCurrent)
-            # print("---logDetCurrent---")
-            # print(logDetCurrent)   
 
     for s in range(0, n_samples, 1):
     # call update beta theta
+        # used for timming
+        if(progress_rep):
+            if(s %  n_reps == 0 or s == 0):
+                start = time.time()
         if(thetaUpdate):
             thetaUpdate = False
 
@@ -314,22 +270,27 @@ def rNNGP(y, X, p, n, m, coords, cov_model, nn_indx, nn_indx_lu,
     
                     # print("---temp_n 4---")
                     # print(temp_n)
-
-                # if(s == 0):
-                #     start = time.time()
+        
+        if(progress_rep):
+            if(s == 0):
+                start = time.time()
 
         logDetCurrent = updateBF(B, F, c, C, coords, nn_indx, nn_indx_lu, n, theta,           
                                                     tau_sq_indx, sigma_sq_indx, phi_indx)
-                # if(s == 0):
-                #     print("logDetCurrent Time = " + str((time.time() - start)) + " sec")
+        if(progress_rep):
+            if(s == 0):
+                print("logDetCurrent Time = " + str((time.time() - start)) + " sec")
         # print(logDetCurrent)
 
-                # if(s == 0):
-                #     start = time.time()
+        if(progress_rep):
+            if(s == 0):
+                start = time.time()
 
         QCurrent = Q(B, F, temp_n, temp_n, n, nn_indx, nn_indx_lu)
-                # if(s == 0):
-                #     print("QCurrent Time = " + str((time.time() - start)) + " sec")
+
+        if(progress_rep):
+            if(s == 0):
+                print("QCurrent Time = " + str((time.time() - start)) + " sec")
 
         logPostCurrent = -0.5*logDetCurrent - 0.5*QCurrent
         logPostCurrent += np.log(theta[phi_indx] - phi_Unif[0]) + np.log(phi_Unif[1] - theta[phi_indx])
@@ -341,10 +302,6 @@ def rNNGP(y, X, p, n, m, coords, cov_model, nn_indx, nn_indx_lu,
         thetaCand[sigma_sq_indx] = np.exp(np.random.normal(loc = np.log(theta[sigma_sq_indx]), scale = tuning[sigma_sq_indx]))
         thetaCand[tau_sq_indx] = np.exp(np.random.normal(loc = np.log(theta[tau_sq_indx]), scale = tuning[tau_sq_indx]))
 
-        # print("s = " + str(s))
-        # print(thetaCand)
-                    # thetaCand = np.array([3.686398, 3.303836, 5.934139])
-
         logDetCand = updateBF(B, F, c, C, coords, nn_indx, nn_indx_lu, n, thetaCand,
                                                     tau_sq_indx, sigma_sq_indx, phi_indx)
 
@@ -354,18 +311,6 @@ def rNNGP(y, X, p, n, m, coords, cov_model, nn_indx, nn_indx_lu,
         logPostCand += np.log(thetaCand[phi_indx] - phi_Unif[0]) + np.log(phi_Unif[1] - thetaCand[phi_indx])
         logPostCand += -1*(1 + sigma_sq_IG[0])*np.log(thetaCand[sigma_sq_indx]) - sigma_sq_IG[1]/thetaCand[sigma_sq_indx] + np.log(thetaCand[sigma_sq_indx])
         logPostCand += -1*(1 + tau_sq_IG[0])*np.log(thetaCand[tau_sq_indx]) - tau_sq_IG[1]/thetaCand[tau_sq_indx] + np.log(thetaCand[tau_sq_indx])
-
-
-                    # print("thetaCand")
-                    # print(thetaCand)
-                    # print("logPostCand")
-                    # print(logPostCand)
-                    # print("logDetCand")
-                    # print(logDetCand)
-                    # print("QCand")
-                    # print(QCand)
-                    # print("logPostCurrent")
-                    # print(logPostCurrent)
 
         if(np.random.uniform(low = 0.0, high = 1.0) <= np.exp(logPostCand - logPostCurrent)):
         # if(np.random.uniform(a = 0.0, b = 1.0) <= np.exp(logPostCand - logPostCurrent)):
@@ -384,13 +329,17 @@ def rNNGP(y, X, p, n, m, coords, cov_model, nn_indx, nn_indx_lu,
         theta_samples[:, s] = theta
 
         # save samples
+        if(progress_rep):
+            if((s + 1) % n_reps == 0):                                      # time for N samples * how many left/10
+                print(100*(s+1)/n_samples, "%, Time estimate left = ", np.round((time.time() - start)*(n_samples - (s+1))/n_reps, 2), "sec")
 
         status += 1
 
     if(verbose):
-        print("Sampled: " + str(s + 1) + " of " + str(n_samples) + ", " + str(100*((s+ 1)/n_samples)))
-        print("Report interval Metrop. Acceptance rate: " + str(round((100*(batchAccept/n_samples)), 4)))
-        print("Overall Metrop. Acceptance rate: " + str(round((100*(accept/n_samples)), 4)))
+        print("----------------------------------------------------------")
+        print("Sampled: " + str(s + 1) + " of " + str(n_samples) + ", " + str(100*((s+ 1)/n_samples)) + "%")
+        print("Report interval Metrop. Acceptance rate: " + str(round((100*(batchAccept/n_samples)), 4)) + "%")
+        print("Overall Metrop. Acceptance rate: " + str(round((100*(accept/n_samples)), 4)) + "%")
         print("----------------------------------------------------------")
 
     return beta_samples, theta_samples
