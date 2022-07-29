@@ -9,7 +9,7 @@ from rNNGPPredict_py import rNNGPPredict
 # for nn search
 from scipy import spatial
 
-def predict(object, X_0, coords_0, verbose = True, n_report = 100):
+def predict(object, X_0, coords_0, verbose = True, progress_rep = True, n_reps = 10):
     
     X = object[8]
     Y = object[9]
@@ -37,7 +37,7 @@ def predict(object, X_0, coords_0, verbose = True, n_report = 100):
 
 
     y_return = rNNGPPredict(X, Y, coords, n, p, n_neighbors, X_0, coords_0, q, nn_indx_0, 
-                        p_beta_samples, p_theta_samples, n_samples, verbose)
+                        p_beta_samples, p_theta_samples, n_samples, verbose, progress_rep, n_reps)
 
 
 
