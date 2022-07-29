@@ -1,0 +1,38 @@
+## Function: updateBF
+**Using 38,544 data points**
+	500 samples ~ 1000x updateBF
+
+Base Line: 11.42 sec, 3.17 hr
+
+# just in time compulation
+Numba Parallel: 2.15 sec, 35.78 min
+Numba no Parallel: 0.51 sec, 8.48 min
+
+# cuda
+CuPY: 115.36 sec, 32 hrs with ~10-20% GPU usage, 1660 ti
+
+########################################################
+# Fastest: Numba no Parallel: 5000 samples ~= 42.5 min #
+########################################################
+
+## Function: rNNGPPredict
+
+Base Line: 4 sec, 5000 samples
+
+# just in time compulation
+Numba Parallel: 3.13 sec, 5000 samples
+Numba no Parallel: 2.88 sec, 5000 samples
+
+# cuda
+CuPY: not tested due to the previous function running poorly
+
+########################################################################
+# Fastest: Numba no Parallel: 5000 samples, 1000 predictions ~= 48 min #
+########################################################################
+
+## total time just taking into account the longest functions to execute:
+
+##############################################
+# Total time: ~ 1 1/2 hours (on personal pc) #
+##############################################
+
