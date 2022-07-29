@@ -1,4 +1,6 @@
-# main file for spNNGP
+########################
+# main file for spNNGP #
+########################
 
 # get the rNNGP function
 from rNNGP_py import rNNGP
@@ -29,7 +31,7 @@ def mkNNIndexCB(coords, m, n_omp_threads = 1):
 
 def spNNGP(x, y, coords, starting, tuning, priors, n_samples,
         method = "response", family = "gaussian", n_neighbors = 15, 
-        cov_model = "exponential", verbose = True, n_report = 100):
+        cov_model = "exponential", verbose = True, n_report = 100, progress_rep = True, n_reps = 100):
 
     ###########
     # Formula #
@@ -162,52 +164,6 @@ def spNNGP(x, y, coords, starting, tuning, priors, n_samples,
     ##############################
 
 
-                    # print("---Y---")
-                    # print(y)
-                    # print("---X---")
-                    # print(x)
-                    # print("---p---")
-                    # print(p)
-                    # print("---n---")
-                    # print(n)
-                    # print("---n_neighbors---")
-                    # print(n_neighbors)
-                    # print("---coords---")
-                    # print(coords)
-                    # print("---cov_model---")
-                    # print(cov_model)
-                    # print("---nn_index---")
-                    # print(nn_index)
-                    # print("---nn_index_lu---")
-                    # print(nn_index_lu)
-                    # print("---sigma_sq_IG---")
-                    # print(sigma_sq_IG)
-                    # print("---tau_sq_IG---")
-                    # print(tau_sq_IG)
-                    # print("---phi_Unif---")
-                    # print(phi_Unif)
-                    # print("---beta_starting---")
-                    # print(beta_starting)
-                    # print("---sigma_sq_starting---")
-                    # print(sigma_sq_starting)
-                    # print("---tau_sq_starting---")
-                    # print(tau_sq_starting)
-                    # print("---phi_starting---")
-                    # print(phi_starting)
-                    # print("---sigma_sq_tuning---")
-                    # print(sigma_sq_tuning)
-                    # print("---tau_sq_tuning---")
-                    # print(tau_sq_tuning)
-                    # print("---phi_tuning---")
-                    # print(phi_tuning)
-                    # print("---n_samples---")
-                    # print(n_samples)
-                    # print("---verbose---")
-                    # print(verbose)
-    
-
-
-
     if(family == "gaussian"):
         if(method == "response"):
             # call rNNGP
@@ -215,7 +171,7 @@ def spNNGP(x, y, coords, starting, tuning, priors, n_samples,
             beta_out, theta_out = rNNGP(y, x, p, n, n_neighbors, coords, cov_model, nn_index, nn_index_lu,
                         sigma_sq_IG, tau_sq_IG, phi_Unif, beta_starting, sigma_sq_starting,
                         tau_sq_starting, phi_starting, sigma_sq_tuning, tau_sq_tuning, phi_tuning,
-                        n_samples, verbose)
+                        n_samples, verbose, progress_rep, n_reps)
 
         else:
             # call sNNGP
@@ -237,7 +193,4 @@ def spNNGP(x, y, coords, starting, tuning, priors, n_samples,
     if(method == "response"):
             #  0       1               2           3        4        5        6    7   8  9     10             11
         return n, n_neighbors, nn_index, nn_index_lu, ord, theta_s, beta_s, coords, x, y, family, cov_model_indx
-            # can also return runtimes if used
-    # else:
-        # return n, n_neighbors, nn_index, nn_index_lu, u_index, u_index_lu, ui_index, ord,
             # can also return runtimes if used
