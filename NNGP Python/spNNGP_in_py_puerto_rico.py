@@ -23,7 +23,7 @@ import random
 # for date calcs
 from datetime import date
 
-file_1 = "..Data Puerto Rico/CID_data_1year.csv"
+file_1 = "..Data Puerto Rico/Ambient Weather Data/CID_data_1year.csv"
 
 data = pd.read_csv(file_1)
 
