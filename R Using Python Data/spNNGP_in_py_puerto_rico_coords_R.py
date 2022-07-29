@@ -26,23 +26,23 @@ from datetime import date, datetime
 # CID
 Latitude_CID = 18.2115553
 Longitude_CID = -67.1370868
-file_CID = "../Working Puerto Rico Data/CID.csv"
+file_CID = "../Data Puerto Rico/Ambient Weather Data/CID.csv"
 # Casa Juan, Mayagüez
 Latitude_CJ = 18.200897
 Longitude_CJ = -67.148253
-file_CJ = "../Working Puerto Rico Data/CJ.csv"
+file_CJ = "../Data Puerto Rico/Ambient Weather Data/CJ.csv"
 # Mayaguez Urb Paseo Los Robles , Mayagüez
 Latitude_UP = 18.231220
 Longitude_UP = -67.155010
-file_UP = "../Working Puerto Rico Data/UP.csv"
+file_UP = "../Data Puerto Rico/Ambient Weather Data/UP.csv"
 # My Weather Station, Mayagüez
 Latitude_MWS = 18.234288
 Longitude_MWS = -67.150602    
-file_MWS = "../Working Puerto Rico Data/MWS.csv"
+file_MWS = "../Data Puerto Rico/Ambient Weather Data/MWS.csv"
 # My Weather Station, Mayagüez (Blue logo)
 Latitude_MWSB = 18.233073
 Longitude_MWSB = -67.136155   
-file_MWSB = "../Working Puerto Rico Data/MWSB.csv"
+file_MWSB = "../Data Puerto Rico/Ambient Weather Data/MWSB.csv"
 
 # for testing out locations
 Location_local = np.array([[Longitude_CID, Latitude_CID],
@@ -59,26 +59,26 @@ Location_local = np.array([[Longitude_CID, Latitude_CID],
 nFiles = 20
 
 # files
-file_1 = "../6374216_18.22_-67.17_2020.csv"
-file_2 = "../6374217_18.20_-67.17_2020.csv"
-file_3 = "../6374218_18.18_-67.17_2020.csv"
-file_4 = "../6378062_18.22_-67.15_2020.csv"
-file_5 = "../6378063_18.20_-67.15_2020.csv"
-file_6 = "../6378064_18.18_-67.15_2020.csv"
-file_7 = "../6381902_18.22_-67.13_2020.csv"
-file_8 = "../6381903_18.20_-67.13_2020.csv"
-file_9 = "../6381904_18.18_-67.13_2020.csv"
-file_10 = "../6385742_18.22_-67.11_2020.csv"
-file_11 = "../6385743_18.20_-67.11_2020.csv"
-file_12 = "../6385744_18.18_-67.11_2020.csv"
-file_13 = "../6374214_18.26_-67.17_2020.csv"
-file_14 = "../6374215_18.24_-67.17_2020.csv"
-file_15 = "../6378060_18.26_-67.15_2020.csv"
-file_16 = "../6378061_18.24_-67.15_2020.csv"
-file_17 = "../6381900_18.26_-67.13_2020.csv"
-file_18 = "../6381901_18.24_-67.13_2020.csv"
-file_19 = "../6385740_18.26_-67.11_2020.csv"
-file_20 = "../6385741_18.24_-67.11_2020.csv"
+file_1 = "../Data Puerto Rico/NREL Data/6374216_18.22_-67.17_2020.csv"
+file_2 = "../Data Puerto Rico/NREL Data/6374217_18.20_-67.17_2020.csv"
+file_3 = "../Data Puerto Rico/NREL Data/6374218_18.18_-67.17_2020.csv"
+file_4 = "../Data Puerto Rico/NREL Data/6378062_18.22_-67.15_2020.csv"
+file_5 = "../Data Puerto Rico/NREL Data/6378063_18.20_-67.15_2020.csv"
+file_6 = "../Data Puerto Rico/NREL Data/6378064_18.18_-67.15_2020.csv"
+file_7 = "../Data Puerto Rico/NREL Data/6381902_18.22_-67.13_2020.csv"
+file_8 = "../Data Puerto Rico/NREL Data/6381903_18.20_-67.13_2020.csv"
+file_9 = "../Data Puerto Rico/NREL Data/6381904_18.18_-67.13_2020.csv"
+file_10 = "../Data Puerto Rico/NREL Data/6385742_18.22_-67.11_2020.csv"
+file_11 = "../Data Puerto Rico/NREL Data/6385743_18.20_-67.11_2020.csv"
+file_12 = "../Data Puerto Rico/NREL Data/6385744_18.18_-67.11_2020.csv"
+file_13 = "../Data Puerto Rico/NREL Data/6374214_18.26_-67.17_2020.csv"
+file_14 = "../Data Puerto Rico/NREL Data/6374215_18.24_-67.17_2020.csv"
+file_15 = "../Data Puerto Rico/NREL Data/6378060_18.26_-67.15_2020.csv"
+file_16 = "../Data Puerto Rico/NREL Data/6378061_18.24_-67.15_2020.csv"
+file_17 = "../Data Puerto Rico/NREL Data/6381900_18.26_-67.13_2020.csv"
+file_18 = "../Data Puerto Rico/NREL Data/6381901_18.24_-67.13_2020.csv"
+file_19 = "../Data Puerto Rico/NREL Data/6385740_18.26_-67.11_2020.csv"
+file_20 = "../Data Puerto Rico/NREL Data/6385741_18.24_-67.11_2020.csv"
 
 # file array used to get location
 file = np.array([file_1, file_2, file_3, file_4, file_5, file_6, file_7, file_8, file_9, file_10, file_11, file_12, file_13, file_14, file_15, file_16, file_17, file_18, file_19, file_20])
@@ -584,9 +584,9 @@ covariance_model = "exponential"
 
 # send x_train, y_train, coords_train
 
-file_x_train = "../x_train.csv"
-file_y_train = "../y_train.csv"
-file_coords_train = "../coords_train.csv"
+file_x_train = "../R Using Python Data/Data From Python/x_train.csv"
+file_y_train = "../R Using Python Data/Data From Python/y_train.csv"
+file_coords_train = "../R Using Python Data/Data From Python/coords_train.csv"
 
 pd.DataFrame(x_train).to_csv(file_x_train)
 pd.DataFrame(y_train).to_csv(file_y_train)
@@ -602,15 +602,15 @@ pd.DataFrame(coords_train).to_csv(file_coords_train)
 
 # send x_test, coords_test
 
-file_x_test = "../x_test.csv"
-file_coords_test = "../coords_test.csv"
+file_x_test = "../R Using Python Data/Data From Python/x_test.csv"
+file_coords_test = "../R Using Python Data/Data From Python/coords_test.csv"
 
 pd.DataFrame(x_test).to_csv(file_x_test)
 pd.DataFrame(coords_test).to_csv(file_coords_test)
 
 # sent to R
 
-file_y_hat = "../y_hat.csv"
+file_y_hat = "../R Using Python Data/Data From R/y_hat.csv"
 
 y_hat = np.array(pd.read_csv(file_y_hat)["x"]) # get y_hat from R
 
