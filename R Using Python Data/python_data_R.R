@@ -5,14 +5,14 @@ main = ".."
 
 # files
   # model
-file.x = main + "/nngp-downscaling/R Using Python Data/Data From Python/x_train.csv"
-file.y = main + "/nngp-downscaling/R Using Python Data/Data From Python/y_train.csv"
-file.coords = main + "/nngp-downscaling/R Using Python Data/Data From Python/coords_train.csv"
+file.x = paste(main, "/nngp-downscaling/R Using Python Data/Data From Python/x_train.csv", sep = "")
+file.y = paste(main, "/nngp-downscaling/R Using Python Data/Data From Python/y_train.csv", sep = "")
+file.coords = paste(main, "/nngp-downscaling/R Using Python Data/Data From Python/coords_train.csv", sep = "")
 
   # predict
-file.x.ho = main + "/nngp-downscaling/R Using Python Data/Data From Python/x_test.csv"
-file.coords.ho = main + "/nngp-downscaling/R Using Python Data/Data From Python/coords_test.csv"
-file.y.ho = main + "/nngp-downscaling/R Using Python Data/Data From R/y_hat.csv"
+file.x.ho = paste(main, "/nngp-downscaling/R Using Python Data/Data From Python/x_test.csv", sep = "")
+file.coords.ho = paste(main, "/nngp-downscaling/R Using Python Data/Data From Python/coords_test.csv", sep = "")
+file.y.ho = paste(main, "/nngp-downscaling/R Using Python Data/Data From R/y_hat.csv", sep = "")
 
 # variable from python
   # model
@@ -30,14 +30,14 @@ tau.sq <- 1
 phi <- 3/0.5
 
 ##Fit a Response, Latent, and Conjugate NNGP model
-n.samples <- 5
+n.samples <- 500
 
 starting <- list("phi"=phi, "sigma.sq"=5, "tau.sq"=1)
 tuning <- list("phi"=0.5, "sigma.sq"=0.5, "tau.sq"=0.5)
 priors <- list("phi.Unif"=c(3/1, 3/0.01), "sigma.sq.IG"=c(2, 5), "tau.sq.IG"=c(2, 1))
 
 cov.model <- "exponential"
-n.report <- 5
+n.report <- 500
 
 ############
 # Response #
