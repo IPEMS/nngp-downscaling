@@ -662,15 +662,15 @@ print(round(np.var(y_train), 2))
 eq = (y_hat - y_test)**2
 mean_eq = np.average(eq)
 
+# MSE
+print("mean(y.hat - y.ho)^2")
+print(round(mean_eq, 2))
+
 ####################
 # Show the summary #
 ####################
 
 summary(m_r)
-
-# MSE
-print("mean(y.hat - y.ho)^2")
-print(round(mean_eq, 2))
 
 print("----------------------------------------------------------")
 print(" Times (s)                              ")
