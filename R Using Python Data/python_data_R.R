@@ -1,20 +1,22 @@
 # takes in python data and runs NNGP
 library(spNNGP)
 
+main = ".."
+
 # files
   # model
-file.x = "../R Using Python Data/Data From Python/x_train.csv"
-file.y = "../R Using Python Data/Data From Python/y_train.csv"
-file.coords = "../R Using Python Data/Data From Python/coords_train.csv"
+file.x = main + "/nngp-downscaling/R Using Python Data/Data From Python/x_train.csv"
+file.y = main + "/nngp-downscaling/R Using Python Data/Data From Python/y_train.csv"
+file.coords = main + "/nngp-downscaling/R Using Python Data/Data From Python/coords_train.csv"
 
   # predict
-file.x.ho = "../R Using Python Data/Data From Python/x_test.csv"
-file.coords.ho = "../R Using Python Data/Data From Python/coords_test.csv"
-file.y.ho = "../R Using Python Data/Data From R/y_hat.csv"
+file.x.ho = main + "/nngp-downscaling/R Using Python Data/Data From Python/x_test.csv"
+file.coords.ho = main + "/nngp-downscaling/R Using Python Data/Data From Python/coords_test.csv"
+file.y.ho = main + "/nngp-downscaling/R Using Python Data/Data From R/y_hat.csv"
 
 # variable from python
   # model
-x = as.matrix(read.csv(file.x))[, 2:7]
+x = as.matrix(read.csv(file.x))[, 2:7]  # 2:7 outside number changed for how many x's
 y = as.matrix(read.csv(file.y))[, 2]
 coords = as.matrix(read.csv(file.coords))[, 2:3]
   # predict
