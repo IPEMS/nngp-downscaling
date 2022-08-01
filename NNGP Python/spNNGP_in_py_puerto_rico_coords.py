@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 from spNNGP_py import spNNGP
 # from predict import predict
 from predict_py import predict
+# summary of NNGP
+from summary_NNGP_py import summary
 
 # get the times
 import time
@@ -629,6 +631,12 @@ print(round(np.var(y_train), 2))
 # mean(y.hat - y.ho)^2
 eq = (y_hat - y_test)**2
 mean_eq = np.average(eq)
+
+####################
+# Show the summary #
+####################
+
+summary(m_r)
 
 # MSE
 print("mean(y.hat - y.ho)^2")
