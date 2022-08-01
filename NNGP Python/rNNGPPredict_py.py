@@ -12,7 +12,7 @@ from util_py import dist2, spCor
 import time
 
 @njit
-def y_hat_calc(n_samples, theta, nTheta, phiIndx, sigmaSqIndx, tauSqIndx, coords_1D, m, nn_indx_0_1D, i, q, coords_0_1D, C, tmp_m, c, X, p_beta_samples,
+def y_hat_calc(n_samples, theta, nTheta, phiIndx, sigmaSqIndx, tauSqIndx, coords_1D, m, nn_indx_0_1D, i, q, coords_0_1D, C, tmp_m, c, dot_part, dot_part_Y,
           nn_indx_0, Y_1D, zIndx, X_0_1D, n, y_0, z):
 
     for s in range(0, n_samples, 1):
@@ -50,7 +50,7 @@ def y_hat_calc(n_samples, theta, nTheta, phiIndx, sigmaSqIndx, tauSqIndx, coords
         dsymv(tmp_m, C, c, 0, 1, m, 0)
 
         # get the dot product of X and beta
-        dot_part = np.dot(X, p_beta_samples.T)
+                # dot_part = np.dot(X, p_beta_samples.T) # put outside
         dot_part2 = dot_part[:, s]
         dot_part3 = dot_part2[nn_indx_0[i, :]]
 
@@ -61,7 +61,7 @@ def y_hat_calc(n_samples, theta, nTheta, phiIndx, sigmaSqIndx, tauSqIndx, coords
         zIndx += 1
 
 
-        dot_part_Y = np.dot(X_0_1D, p_beta_samples.T)
+        # dot_part_Y = np.dot(X_0_1D, p_beta_samples.T) # put outside
         dot_part_Y2 = dot_part_Y[i, s]
                     # if(count == 1 or count == 2):
                     #     print("dot")
@@ -123,15 +123,21 @@ def rNNGPPredict(X, Y, coords, n, p, m, X_0, coords_0, q, nn_indx_0,
 
     z = np.random.normal(loc = 0, scale = 1, size = (q*n_samples))
 
+    dot_part = np.dot(X, p_beta_samples.T)
+    dot_part_Y = np.dot(X_0_1D, p_beta_samples.T)
+
     for i in range(0, q, 1):
         # used for timming
         if(progress_rep):
             if(i % n_reps == 0 or i == 0):
                 start = time.time()
         # calculate y hat
+        if(i == 1):
+            starts = time.time()
         y_hat_calc(n_samples, theta, nTheta, phiIndx, sigmaSqIndx, tauSqIndx, coords_1D, m, nn_indx_0_1D, 
-                   i, q, coords_0_1D, C, tmp_m, c, X, p_beta_samples, nn_indx_0, Y_1D, zIndx, X_0_1D, n, y_0, z)
-
+                   i, q, coords_0_1D, C, tmp_m, c, dot_part, dot_part_Y, nn_indx_0, Y_1D, zIndx, X_0_1D, n, y_0, z)
+        if(i == 1):
+            print("Sample Time:", time.time() - starts)
 
         # save samples
         if(progress_rep):
