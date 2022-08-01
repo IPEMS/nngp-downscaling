@@ -60,37 +60,60 @@ Location_local = np.array([[Longitude_CID, Latitude_CID],
 # number of files
 nFiles = 20
 
+# file names
+file_name_1 = "6374214_18.26_-67.17_2020.csv"
+file_name_2 = "6374215_18.24_-67.17_2020.csv"
+file_name_3 = "6374216_18.22_-67.17_2020.csv"
+file_name_4 = "6374217_18.20_-67.17_2020.csv"   # -67.17
+file_name_5 = "6374218_18.18_-67.17_2020.csv"
+
+file_name_6 = "6378060_18.26_-67.15_2020.csv"
+file_name_7 = "6378061_18.24_-67.15_2020.csv"
+file_name_8 = "6378062_18.22_-67.15_2020.csv"   # -67.15
+file_name_9 = "6378063_18.20_-67.15_2020.csv"
+file_name_10 = "6378064_18.18_-67.15_2020.csv"
+
+file_name_11 = "6381900_18.26_-67.13_2020.csv"
+file_name_12 = "6381901_18.24_-67.13_2020.csv"
+file_name_13 = "6381902_18.22_-67.13_2020.csv"   # -67.13
+file_name_14 = "6381903_18.20_-67.13_2020.csv"
+file_name_15 = "6381904_18.18_-67.13_2020.csv"
+
+file_name_16 = "6385740_18.26_-67.11_2020.csv"
+file_name_17 = "6385741_18.24_-67.11_2020.csv"
+file_name_18 = "6385742_18.22_-67.11_2020.csv"   # -67.11
+file_name_19 = "6385743_18.20_-67.11_2020.csv"
+file_name_20 = "6385744_18.18_-67.11_2020.csv"
+
+# location
+location = "../Data Puerto Rico/NREL Data/"
+
 # files
-file_1 = "../Data Puerto Rico/NREL Data/6374216_18.22_-67.17_2020.csv"
-file_2 = "../Data Puerto Rico/NREL Data/6374217_18.20_-67.17_2020.csv"
-file_3 = "../Data Puerto Rico/NREL Data/6374218_18.18_-67.17_2020.csv"
-file_4 = "../Data Puerto Rico/NREL Data/6378062_18.22_-67.15_2020.csv"
-file_5 = "../Data Puerto Rico/NREL Data/6378063_18.20_-67.15_2020.csv"
-file_6 = "../Data Puerto Rico/NREL Data/6378064_18.18_-67.15_2020.csv"
-file_7 = "../Data Puerto Rico/NREL Data/6381902_18.22_-67.13_2020.csv"
-file_8 = "../Data Puerto Rico/NREL Data/6381903_18.20_-67.13_2020.csv"
-file_9 = "../Data Puerto Rico/NREL Data/6381904_18.18_-67.13_2020.csv"
-file_10 = "../Data Puerto Rico/NREL Data/6385742_18.22_-67.11_2020.csv"
-file_11 = "../Data Puerto Rico/NREL Data/6385743_18.20_-67.11_2020.csv"
-file_12 = "../Data Puerto Rico/NREL Data/6385744_18.18_-67.11_2020.csv"
-file_13 = "../Data Puerto Rico/NREL Data/6374214_18.26_-67.17_2020.csv"
-file_14 = "../Data Puerto Rico/NREL Data/6374215_18.24_-67.17_2020.csv"
-file_15 = "../Data Puerto Rico/NREL Data/6378060_18.26_-67.15_2020.csv"
-file_16 = "../Data Puerto Rico/NREL Data/6378061_18.24_-67.15_2020.csv"
-file_17 = "../Data Puerto Rico/NREL Data/6381900_18.26_-67.13_2020.csv"
-file_18 = "../Data Puerto Rico/NREL Data/6381901_18.24_-67.13_2020.csv"
-file_19 = "../Data Puerto Rico/NREL Data/6385740_18.26_-67.11_2020.csv"
-file_20 = "../Data Puerto Rico/NREL Data/6385741_18.24_-67.11_2020.csv"
-
-print("length of files" + str(len(file_1))) # prints the length of the file names
-
-# checks if the file names are the coorect length. Otherwise change line 155 to fix new lengths
-if(len(file_1) != 59):
-    print("Fix Lines: 155 to get correct coords.")
-    exit()
+file_1 = location + file_name_1
+file_2 = location + file_name_2
+file_3 = location + file_name_3
+file_4 = location + file_name_4
+file_5 = location + file_name_5
+file_6 = location + file_name_6
+file_7 = location + file_name_7
+file_8 = location + file_name_8
+file_9 = location + file_name_9
+file_10 = location + file_name_10
+file_11 = location + file_name_11
+file_12 = location + file_name_12
+file_13 = location + file_name_13
+file_14 = location + file_name_14
+file_15 = location + file_name_15
+file_16 = location + file_name_16
+file_17 = location + file_name_17
+file_18 = location + file_name_18
+file_19 = location + file_name_19
+file_20 = location + file_name_20
 
 # file array used to get location
-file = np.array([file_1, file_2, file_3, file_4, file_5, file_6, file_7, file_8, file_9, file_10, file_11, file_12, file_13, file_14, file_15, file_16, file_17, file_18, file_19, file_20])
+file = np.array([file_name_1, file_name_2, file_name_3, file_name_4, file_name_5, file_name_6, file_name_7, 
+                file_name_8, file_name_9, file_name_10, file_name_11, file_name_12, file_name_13, file_name_14, 
+                file_name_15, file_name_16, file_name_17, file_name_18, file_name_19, file_name_20])
 
 # get files data (time, date, solar irradiance)
 site1 = pd.read_csv(file_1, skiprows=2)
@@ -147,14 +170,14 @@ sol_rad_20 = site20["GHI"]
 #############################
 
 # coords from the title
-    # 38:43 -> latitude
-    # 44:50 -> longitude
+    # 8:13 -> latitude
+    # 14:20 -> longitude
 
 loc_model = np.empty((nFiles, 2))
 
 for i in range(0, nFiles, 1):
     file_temp = file[i] # first is file_1
-    loc_model[i, :] = np.array([float(file_temp[44:50]), float(file_temp[38:43])]) # get long and lat
+    loc_model[i, :] = np.array([float(file_temp[14:20]), float(file_temp[8:13])]) # get long and lat
 
 ##################################################################
 # Print to see what parts are Ambient Weather Data vs NREL data #
@@ -164,7 +187,7 @@ for i in range(0, nFiles, 1):
     # x -> -67.16, -67.10
     # y -> 18.17, 18.27
 # get image of background
-file_img = "C:/Users/tj10c/Documents/Classes/Other/REU Documents/REU code/NREL Data/map.png"
+file_img = "../Data Puerto Rico/map.png"
 
 BBox = (-67.18, -67.10, 18.17, 18.27)
 
