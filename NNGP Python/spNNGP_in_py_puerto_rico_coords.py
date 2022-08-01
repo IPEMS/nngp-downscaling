@@ -18,6 +18,13 @@ import pandas as pd
 # for date calcs
 from datetime import date, datetime
 
+##################################################
+# location were main nngp-downscaling file is at #
+##################################################
+
+main = ".."
+
+
 ########################
 # Ambient Weather Data #
 ########################
@@ -28,23 +35,23 @@ from datetime import date, datetime
 # CID
 Latitude_CID = 18.2115553
 Longitude_CID = -67.1370868
-file_CID = "../Data Puerto Rico/Ambient Weather Data/CID.csv"
+file_CID = main + "/nngp-downscaling/Data Puerto Rico/Ambient Weather Data/CID.csv"
 # Casa Juan, Mayagüez
 Latitude_CJ = 18.200897
 Longitude_CJ = -67.148253
-file_CJ = "../Data Puerto Rico/Ambient Weather Data/CJ.csv"
+file_CJ = main + "/nngp-downscaling/Data Puerto Rico/Ambient Weather Data/CJ.csv"
 # Mayaguez Urb Paseo Los Robles , Mayagüez
 Latitude_UP = 18.231220
 Longitude_UP = -67.155010
-file_UP = "../Data Puerto Rico/Ambient Weather Data/UP.csv"
+file_UP = main + "/nngp-downscaling/Data Puerto Rico/Ambient Weather Data/UP.csv"
 # My Weather Station, Mayagüez
 Latitude_MWS = 18.234288
 Longitude_MWS = -67.150602    
-file_MWS = "../Data Puerto Rico/Ambient Weather Data/MWS.csv"
+file_MWS = main + "/nngp-downscaling/Data Puerto Rico/Ambient Weather Data/MWS.csv"
 # My Weather Station, Mayagüez (Blue logo)
 Latitude_MWSB = 18.233073
 Longitude_MWSB = -67.136155   
-file_MWSB = "../Data Puerto Rico/Ambient Weather Data/MWSB.csv"
+file_MWSB = main + "/nngp-downscaling/Data Puerto Rico/Ambient Weather Data/MWSB.csv"
 
 # for testing out locations
 Location_local = np.array([[Longitude_CID, Latitude_CID],
@@ -86,7 +93,7 @@ file_name_19 = "6385743_18.20_-67.11_2020.csv"
 file_name_20 = "6385744_18.18_-67.11_2020.csv"
 
 # location
-location = "../Data Puerto Rico/NREL Data/"
+location = main + "/nngp-downscaling/Data Puerto Rico/NREL Data/"
 
 # files
 file_1 = location + file_name_1
@@ -187,7 +194,7 @@ for i in range(0, nFiles, 1):
     # x -> -67.16, -67.10
     # y -> 18.17, 18.27
 # get image of background
-file_img = "../Data Puerto Rico/map.png"
+file_img = main + "/nngp-downscaling/Data Puerto Rico/map.png"
 
 BBox = (-67.18, -67.10, 18.17, 18.27)
 
