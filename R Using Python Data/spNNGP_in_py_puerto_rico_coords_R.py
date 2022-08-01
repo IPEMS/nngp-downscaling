@@ -1,10 +1,22 @@
 # plotting
 import matplotlib.pyplot as plt
 
+##################################################
+# location were main nngp-downscaling file is at #
+##################################################
+
+main = ".."
+
+# get all the files to be used
+import sys
+sys.path.insert(1, main + "/nngp-downscaling/NNGP Python")
+
 # import spNNGP class
 from spNNGP_py import spNNGP
 # from predict import predict
 from predict_py import predict
+# summary of NNGP
+from summary_NNGP_py import summary
 
 # get the times
 import time
@@ -16,6 +28,7 @@ import pandas as pd
 # for date calcs
 from datetime import date, datetime
 
+
 ########################
 # Ambient Weather Data #
 ########################
@@ -26,23 +39,23 @@ from datetime import date, datetime
 # CID
 Latitude_CID = 18.2115553
 Longitude_CID = -67.1370868
-file_CID = "../Data Puerto Rico/Ambient Weather Data/CID.csv"
+file_CID = main + "/nngp-downscaling/Data Puerto Rico/Ambient Weather Data/CID.csv"
 # Casa Juan, Mayagüez
 Latitude_CJ = 18.200897
 Longitude_CJ = -67.148253
-file_CJ = "../Data Puerto Rico/Ambient Weather Data/CJ.csv"
+file_CJ = main + "/nngp-downscaling/Data Puerto Rico/Ambient Weather Data/CJ.csv"
 # Mayaguez Urb Paseo Los Robles , Mayagüez
 Latitude_UP = 18.231220
 Longitude_UP = -67.155010
-file_UP = "../Data Puerto Rico/Ambient Weather Data/UP.csv"
+file_UP = main + "/nngp-downscaling/Data Puerto Rico/Ambient Weather Data/UP.csv"
 # My Weather Station, Mayagüez
 Latitude_MWS = 18.234288
 Longitude_MWS = -67.150602    
-file_MWS = "../Data Puerto Rico/Ambient Weather Data/MWS.csv"
+file_MWS = main + "/nngp-downscaling/Data Puerto Rico/Ambient Weather Data/MWS.csv"
 # My Weather Station, Mayagüez (Blue logo)
 Latitude_MWSB = 18.233073
 Longitude_MWSB = -67.136155   
-file_MWSB = "../Data Puerto Rico/Ambient Weather Data/MWSB.csv"
+file_MWSB = main + "/nngp-downscaling/Data Puerto Rico/Ambient Weather Data/MWSB.csv"
 
 # for testing out locations
 Location_local = np.array([[Longitude_CID, Latitude_CID],
@@ -58,30 +71,60 @@ Location_local = np.array([[Longitude_CID, Latitude_CID],
 # number of files
 nFiles = 20
 
+# file names
+file_name_1 = "6374214_18.26_-67.17_2020.csv"
+file_name_2 = "6374215_18.24_-67.17_2020.csv"
+file_name_3 = "6374216_18.22_-67.17_2020.csv"
+file_name_4 = "6374217_18.20_-67.17_2020.csv"   # -67.17
+file_name_5 = "6374218_18.18_-67.17_2020.csv"
+
+file_name_6 = "6378060_18.26_-67.15_2020.csv"
+file_name_7 = "6378061_18.24_-67.15_2020.csv"
+file_name_8 = "6378062_18.22_-67.15_2020.csv"   # -67.15
+file_name_9 = "6378063_18.20_-67.15_2020.csv"
+file_name_10 = "6378064_18.18_-67.15_2020.csv"
+
+file_name_11 = "6381900_18.26_-67.13_2020.csv"
+file_name_12 = "6381901_18.24_-67.13_2020.csv"
+file_name_13 = "6381902_18.22_-67.13_2020.csv"   # -67.13
+file_name_14 = "6381903_18.20_-67.13_2020.csv"
+file_name_15 = "6381904_18.18_-67.13_2020.csv"
+
+file_name_16 = "6385740_18.26_-67.11_2020.csv"
+file_name_17 = "6385741_18.24_-67.11_2020.csv"
+file_name_18 = "6385742_18.22_-67.11_2020.csv"   # -67.11
+file_name_19 = "6385743_18.20_-67.11_2020.csv"
+file_name_20 = "6385744_18.18_-67.11_2020.csv"
+
+# location
+location = main + "/nngp-downscaling/Data Puerto Rico/NREL Data/"
+
 # files
-file_1 = "../Data Puerto Rico/NREL Data/6374216_18.22_-67.17_2020.csv"
-file_2 = "../Data Puerto Rico/NREL Data/6374217_18.20_-67.17_2020.csv"
-file_3 = "../Data Puerto Rico/NREL Data/6374218_18.18_-67.17_2020.csv"
-file_4 = "../Data Puerto Rico/NREL Data/6378062_18.22_-67.15_2020.csv"
-file_5 = "../Data Puerto Rico/NREL Data/6378063_18.20_-67.15_2020.csv"
-file_6 = "../Data Puerto Rico/NREL Data/6378064_18.18_-67.15_2020.csv"
-file_7 = "../Data Puerto Rico/NREL Data/6381902_18.22_-67.13_2020.csv"
-file_8 = "../Data Puerto Rico/NREL Data/6381903_18.20_-67.13_2020.csv"
-file_9 = "../Data Puerto Rico/NREL Data/6381904_18.18_-67.13_2020.csv"
-file_10 = "../Data Puerto Rico/NREL Data/6385742_18.22_-67.11_2020.csv"
-file_11 = "../Data Puerto Rico/NREL Data/6385743_18.20_-67.11_2020.csv"
-file_12 = "../Data Puerto Rico/NREL Data/6385744_18.18_-67.11_2020.csv"
-file_13 = "../Data Puerto Rico/NREL Data/6374214_18.26_-67.17_2020.csv"
-file_14 = "../Data Puerto Rico/NREL Data/6374215_18.24_-67.17_2020.csv"
-file_15 = "../Data Puerto Rico/NREL Data/6378060_18.26_-67.15_2020.csv"
-file_16 = "../Data Puerto Rico/NREL Data/6378061_18.24_-67.15_2020.csv"
-file_17 = "../Data Puerto Rico/NREL Data/6381900_18.26_-67.13_2020.csv"
-file_18 = "../Data Puerto Rico/NREL Data/6381901_18.24_-67.13_2020.csv"
-file_19 = "../Data Puerto Rico/NREL Data/6385740_18.26_-67.11_2020.csv"
-file_20 = "../Data Puerto Rico/NREL Data/6385741_18.24_-67.11_2020.csv"
+file_1 = location + file_name_1
+file_2 = location + file_name_2
+file_3 = location + file_name_3
+file_4 = location + file_name_4
+file_5 = location + file_name_5
+file_6 = location + file_name_6
+file_7 = location + file_name_7
+file_8 = location + file_name_8
+file_9 = location + file_name_9
+file_10 = location + file_name_10
+file_11 = location + file_name_11
+file_12 = location + file_name_12
+file_13 = location + file_name_13
+file_14 = location + file_name_14
+file_15 = location + file_name_15
+file_16 = location + file_name_16
+file_17 = location + file_name_17
+file_18 = location + file_name_18
+file_19 = location + file_name_19
+file_20 = location + file_name_20
 
 # file array used to get location
-file = np.array([file_1, file_2, file_3, file_4, file_5, file_6, file_7, file_8, file_9, file_10, file_11, file_12, file_13, file_14, file_15, file_16, file_17, file_18, file_19, file_20])
+file = np.array([file_name_1, file_name_2, file_name_3, file_name_4, file_name_5, file_name_6, file_name_7, 
+                file_name_8, file_name_9, file_name_10, file_name_11, file_name_12, file_name_13, file_name_14, 
+                file_name_15, file_name_16, file_name_17, file_name_18, file_name_19, file_name_20])
 
 # get files data (time, date, solar irradiance)
 site1 = pd.read_csv(file_1, skiprows=2)
@@ -138,14 +181,14 @@ sol_rad_20 = site20["GHI"]
 #############################
 
 # coords from the title
-    # 80:85 -> latitude
-    # 86:92 -> longitude
+    # 8:13 -> latitude
+    # 14:20 -> longitude
 
 loc_model = np.empty((nFiles, 2))
 
 for i in range(0, nFiles, 1):
     file_temp = file[i] # first is file_1
-    loc_model[i, :] = np.array([float(file_temp[86:92]), float(file_temp[80:85])]) # get long and lat
+    loc_model[i, :] = np.array([float(file_temp[14:20]), float(file_temp[8:13])]) # get long and lat
 
 ##################################################################
 # Print to see what parts are Ambient Weather Data vs NREL data #
@@ -155,7 +198,7 @@ for i in range(0, nFiles, 1):
     # x -> -67.16, -67.10
     # y -> 18.17, 18.27
 # get image of background
-file_img = "../map.png"
+file_img = main + "/nngp-downscaling/Data Puerto Rico/map.png"
 
 BBox = (-67.18, -67.10, 18.17, 18.27)
 
@@ -535,10 +578,8 @@ days_unique = np.unique(numb_of_days)
 # get random __ amount of days
 rand_day = np.random.choice(days_unique, nDaysP, replace = False)
 
-# can assign rand_day for next time so R and python line up here:
-rand_day = np.array([174.])
-
-print("rad_day = " + str(rand_day))
+rand_day = np.array([174.]) # set the day to what R was given
+print("rand_day = " + str(rand_day))
 
 for i in range(0, nDaysP, 1):
     if(i == 0): # if at the first one make the first part of the tests
@@ -584,9 +625,9 @@ covariance_model = "exponential"
 
 # send x_train, y_train, coords_train
 
-file_x_train = "../R Using Python Data/Data From Python/x_train.csv"
-file_y_train = "../R Using Python Data/Data From Python/y_train.csv"
-file_coords_train = "../R Using Python Data/Data From Python/coords_train.csv"
+file_x_train = main + "/nngp-downscaling/R Using Python Data/Data From Python/x_train.csv"
+file_y_train = main + "/nngp-downscaling/R Using Python Data/Data From Python/y_train.csv"
+file_coords_train = main + "/nngp-downscaling/R Using Python Data/Data From Python/coords_train.csv"
 
 pd.DataFrame(x_train).to_csv(file_x_train)
 pd.DataFrame(y_train).to_csv(file_y_train)
@@ -602,15 +643,15 @@ pd.DataFrame(coords_train).to_csv(file_coords_train)
 
 # send x_test, coords_test
 
-file_x_test = "../R Using Python Data/Data From Python/x_test.csv"
-file_coords_test = "../R Using Python Data/Data From Python/coords_test.csv"
+file_x_test = main + "/nngp-downscaling/R Using Python Data/Data From Python/x_test.csv"
+file_coords_test = main + "/nngp-downscaling/R Using Python Data/Data From Python/coords_test.csv"
 
 pd.DataFrame(x_test).to_csv(file_x_test)
 pd.DataFrame(coords_test).to_csv(file_coords_test)
 
 # sent to R
 
-file_y_hat = "../R Using Python Data/Data From R/y_hat.csv"
+file_y_hat = main + "/nngp-downscaling/R Using Python Data/Data From R/y_hat.csv"
 
 y_hat = np.array(pd.read_csv(file_y_hat)["x"]) # get y_hat from R
 
@@ -658,9 +699,12 @@ print("Date Range = " + str(dateL_conv) + " to " + str(dateH_conv))
 print("Chosen Date(s) for Predictions: ")
 
 for i in range(0, nDaysP, 1):
-    indx = np.where(numb_of_days_conv == rand_day[i])
-    days_test = date_conv[indx]
-    print(str(i+1) + ": " + str(days_test[0]))
+    year = "2022"
+    dayChosen = str(int(rand_day[i]))
+    dayChosen.rjust(3 + len(dayChosen), '0')
+    dayPredict = datetime.strptime(year + "/" + dayChosen, "%Y/%j").strftime("%m/%d/%Y")
+
+    print(str(i + 1) + ": " + str(dayPredict))
 
 print("Location(s): ")
 
@@ -705,5 +749,37 @@ for i in range(0, nDaysP, 1):
         # plt.title(("Solar Irradiance of y_hat vs y_test on: " + dayPredict + ", at location: " + str(names[j])))
         plt.title((str(names[j])) + " on: " + dayPredict)
         plt.xlabel("Time (hr)")
+        plt.ylabel("Solar Irradiance (W/m^2)")
+    plt.show()
+
+    for j in range(0, 5, 1):
+
+        #########################
+        # Get diff for that day #
+        #########################
+
+        # get the values of the day
+        
+        y_hat_day = y_hat[numb_days_test == rand_day[i]]
+        y_test_day = y_test[numb_days_test == rand_day[i]]
+        coords_test_day = coords_test[numb_days_test == rand_day[i]]
+
+        # get for a specific coord
+            # for each spot "j"
+        y_hat_day = y_hat_day[coords_test_day[:, 0] == lon[j]]
+        y_test_day = y_test_day[coords_test_day[:, 0] == lon[j]]
+
+        diff_day = np.abs(y_hat_day - y_test_day)
+
+        plt.subplot(3, 2, j+1)
+        plt.boxplot(diff_day)
+
+        year = "2022"
+        dayChosen = str(int(rand_day[i]))
+        dayChosen.rjust(3 + len(dayChosen), '0')
+        dayPredict = datetime.strptime(year + "/" + dayChosen, "%Y/%j").strftime("%m/%d/%Y")
+
+        # plt.title(("Solar Irradiance of y_hat vs y_test on: " + dayPredict + ", at location: " + str(names[j])))
+        plt.title((str(names[j])) + " on: " + dayPredict)
         plt.ylabel("Solar Irradiance (W/m^2)")
     plt.show()
