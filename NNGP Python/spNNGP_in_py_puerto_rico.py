@@ -198,7 +198,7 @@ coords = np.column_stack((time_hour, time_after))
 
 # make x side of the equation
     #
-x = np.column_stack((np.ones(shape = (n, 1)), numb_of_days, Temp, rain))
+x = np.column_stack((np.ones(shape = (n, 1)), numb_of_days, Temp, rain, UV))
 
     # rand_day = np.zeros(nDaysP)
 
