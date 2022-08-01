@@ -669,9 +669,12 @@ print("Date Range = " + str(dateL_conv) + " to " + str(dateH_conv))
 print("Chosen Date(s) for Predictions: ")
 
 for i in range(0, nDaysP, 1):
-    indx = np.where(numb_of_days_conv == rand_day[i])
-    days_test = date_conv[indx]
-    print(str(i+1) + ": " + str(days_test[0]))
+    year = "2022"
+    dayChosen = str(int(rand_day[i]))
+    dayChosen.rjust(3 + len(dayChosen), '0')
+    dayPredict = datetime.strptime(year + "/" + dayChosen, "%Y/%j").strftime("%m/%d/%Y")
+
+    print(str(i + 1) + ": " + str(dayPredict))
 
 print("Location(s): ")
 
