@@ -80,6 +80,13 @@ file_18 = "../Data Puerto Rico/NREL Data/6381901_18.24_-67.13_2020.csv"
 file_19 = "../Data Puerto Rico/NREL Data/6385740_18.26_-67.11_2020.csv"
 file_20 = "../Data Puerto Rico/NREL Data/6385741_18.24_-67.11_2020.csv"
 
+print("length of files" + str(len(file_1))) # prints the length of the file names
+
+# checks if the file names are the coorect length. Otherwise change line 155 to fix new lengths
+if(len(file_1) != 59):
+    print("Fix Lines: 155 to get correct coords.")
+    exit()
+
 # file array used to get location
 file = np.array([file_1, file_2, file_3, file_4, file_5, file_6, file_7, file_8, file_9, file_10, file_11, file_12, file_13, file_14, file_15, file_16, file_17, file_18, file_19, file_20])
 
@@ -138,14 +145,14 @@ sol_rad_20 = site20["GHI"]
 #############################
 
 # coords from the title
-    # 80:85 -> latitude
-    # 86:92 -> longitude
+    # 38:43 -> latitude
+    # 44:50 -> longitude
 
 loc_model = np.empty((nFiles, 2))
 
 for i in range(0, nFiles, 1):
     file_temp = file[i] # first is file_1
-    loc_model[i, :] = np.array([float(file_temp[86:92]), float(file_temp[80:85])]) # get long and lat
+    loc_model[i, :] = np.array([float(file_temp[44:50]), float(file_temp[38:43])]) # get long and lat
 
 ##################################################################
 # Print to see what parts are Ambient Weather Data vs NREL data #
