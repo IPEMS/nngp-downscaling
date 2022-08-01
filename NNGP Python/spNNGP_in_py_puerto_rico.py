@@ -23,7 +23,13 @@ import random
 # for date calcs
 from datetime import date
 
-file_1 = "..Data Puerto Rico/Ambient Weather Data/CID_data_1year.csv"
+##################################################
+# location were main nngp-downscaling file is at #
+##################################################
+
+main = ".."
+
+file_1 = main + "/nngp-downscaling/Data Puerto Rico/Ambient Weather Data/CID_data_1year.csv"
 
 data = pd.read_csv(file_1)
 
