@@ -751,3 +751,35 @@ for i in range(0, nDaysP, 1):
         plt.xlabel("Time (hr)")
         plt.ylabel("Solar Irradiance (W/m^2)")
     plt.show()
+    
+    for j in range(0, 5, 1):
+
+        #########################
+        # Get diff for that day #
+        #########################
+
+        # get the values of the day
+        
+        y_hat_day = y_hat[numb_days_test == rand_day[i]]
+        y_test_day = y_test[numb_days_test == rand_day[i]]
+        coords_test_day = coords_test[numb_days_test == rand_day[i]]
+
+        # get for a specific coord
+            # for each spot "j"
+        y_hat_day = y_hat_day[coords_test_day[:, 0] == lon[j]]
+        y_test_day = y_test_day[coords_test_day[:, 0] == lon[j]]
+
+        diff_day = np.abs(y_hat_day - y_test_day)
+
+        plt.subplot(3, 2, j+1)
+        plt.boxplot(diff_day)
+
+        year = "2022"
+        dayChosen = str(int(rand_day[i]))
+        dayChosen.rjust(3 + len(dayChosen), '0')
+        dayPredict = datetime.strptime(year + "/" + dayChosen, "%Y/%j").strftime("%m/%d/%Y")
+
+        # plt.title(("Solar Irradiance of y_hat vs y_test on: " + dayPredict + ", at location: " + str(names[j])))
+        plt.title((str(names[j])) + " on: " + dayPredict)
+        plt.ylabel("Solar Irradiance (W/m^2)")
+    plt.show()
