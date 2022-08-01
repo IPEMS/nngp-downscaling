@@ -62,8 +62,8 @@ def summary(object):
 
     if(p == 5):
         all.index = ['(Intercept)', 'X2', 'X3', 'X4', 'X5', 'sigma_sq', 'tau_sq', 'phi']
-    if(p == 3):
-        all.index = ['(Intercept)', 'X2', 'X3', 'sigma_sq', 'tau_sq', 'phi']
+    if(p == 6):
+        all.index = ['(Intercept)', 'X2', 'X3', 'X4', 'X5', 'X6', 'sigma_sq', 'tau_sq', 'phi']
 
     print(pd.DataFrame(np.around(all, 2)))
 
@@ -83,14 +83,14 @@ def summary(object):
             plt.plot(x_vals, p_theta_samplesT[i-5, :])
             plt.title(all.index[i])
         plt.show()
-    if(p == 3):
-        for i in range(0, 3, 1):
-            plt.subplot(2, 2, i+1)
+    if(p == 6):
+        for i in range(0, 6, 1):
+            plt.subplot(2, 3, i+1)
             plt.plot(x_vals, p_beta_samplesT[i, :])
             plt.title(all.index[i])
         plt.show()
-        for i in range(3, 6, 1):
-            plt.subplot(2, 2, i+1-3)
-            plt.plot(x_vals, p_theta_samplesT[i-3, :])
+        for i in range(6, 9, 1):
+            plt.subplot(2, 2, i+1-6)
+            plt.plot(x_vals, p_theta_samplesT[i-6, :])
             plt.title(all.index[i])
         plt.show()
