@@ -653,6 +653,9 @@ pd.DataFrame(coords_test).to_csv(file_coords_test)
 
 file_y_hat = main + "/nngp-downscaling/R Using Python Data/Data From R/y_hat.csv"
 
+# if using day 201 data use "0" instead of "x". 
+  # set rand_day -> 201
+
 y_hat = np.array(pd.read_csv(file_y_hat)["x"]) # get y_hat from R
 
 #################
