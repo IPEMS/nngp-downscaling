@@ -42,7 +42,7 @@ def summary(object):
     percentile_theta = np.zeros((3, len(percentile)))
 
     print("Model class is NNGP, method response, family gaussian.")
-    print("Model object contains 10 MCMC samples.")
+    print("Model object contains" + str(n_samples) +  "MCMC samples.")
     print("Chain sub.sample:")
     print("start = " + str(int(n_samples/2)))
     print("end = " + str(n_samples))
